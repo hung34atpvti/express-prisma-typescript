@@ -1,6 +1,6 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from '@prisma/client';
 
-export let prisma: any;
+export let prisma: PrismaClient;
 
 export const connect = async () => {
   try {

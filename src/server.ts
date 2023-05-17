@@ -1,18 +1,19 @@
-import app from "./app";
-import * as database from "./database/database";
-import dotenv from "dotenv";
+import app from './app';
+import * as database from './database/database';
+import dotenv from 'dotenv';
+import loggers from './logger/loggers';
 
 dotenv.config();
 
-const PORT = process.env.PORT;
+const {PORT} = process.env;
 
 const startServer = async () => {
   await database.connect();
   app.listen(PORT || 3000, () => {
-    console.log(`Api listening on port ${PORT}`);
+    loggers.info(`Api listening on port ${PORT}`);
   });
 };
 
 startServer().then(() => {
-  console.log(`Server started`);
+  loggers.info(`Server started`);
 });

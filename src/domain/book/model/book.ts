@@ -1,10 +1,5 @@
-import { prisma } from "../../../database/database";
-
-export interface Book {
-  id: number;
-  name: string;
-  author?: string;
-}
+import { prisma } from '../../../database/database';
+import type { Book } from '@prisma/client';
 
 class BookRepository {
   async createOne(reqBook: Book): Promise<Book> {
@@ -20,7 +15,7 @@ class BookRepository {
     return prisma.book.findMany();
   }
 
-  async findById(id: number): Promise<Book> {
+  async findById(id: number): Promise<Book | null> {
     return prisma.book.findUnique({
       where: { id },
     });
@@ -44,3 +39,4 @@ class BookRepository {
 }
 
 export default new BookRepository();
+export { Book };

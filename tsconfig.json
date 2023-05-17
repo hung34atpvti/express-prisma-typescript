@@ -1,25 +1,29 @@
 {
   "compilerOptions": {
-    "baseUrl": "./",
-    "rootDir": "./src",
-    "outDir": "./dist",
+    "target": "es5",
     "module": "commonjs",
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "target": "ES6",
-    "experimentalDecorators": true,
-    "noImplicitAny": true,
-    "checkJs": true,
-    "skipLibCheck": true,
-    "paths": {
-      "*": ["node_modules/*"]
-    },
+    "sourceMap": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    /* Strict Type-Checking Options */
     "strict": true,
-    "resolveJsonModule": true
+    "noImplicitAny": true,
+    /* Module Resolution Options */
+    "moduleResolution": "node",
+    "baseUrl": "./src",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    /* Advanced Options */
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
   },
-  "ts-node": {
-    "transpileOnly": true,
-    "files": true
-  },
-  "exclude": ["./coverage", "./dist", "./prisma", "**/*.test.ts"]
+  "lib": ["es2015"],
+  "include": ["src/**/*"],
+  "exclude": [
+    "node_modules",
+    "./coverage",
+    "./dist",
+    "./prisma",
+    "**/*.test.ts"
+  ]
 }

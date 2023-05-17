@@ -1,14 +1,13 @@
-import express, { NextFunction, Request, Response } from "express";
-import morgan from "morgan";
-import cors from "cors";
-import helmet from "helmet";
-import bookController from "./domain/book/controller/book.controller";
+import express, { Request, Response } from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import bookController from './domain/book/controller/book.controller';
+import { globalExceptionHandler, notFoundHandler } from './middleware/global.exception.handler';
+import morganMiddleware from './middleware/morgan.middleware';
 
 const app = express();
 
-if (process.env.NODE_ENV === "develop") {
-  app.use(morgan("dev"));
-}
+app.use(morganMiddleware);
 
 app.use(cors());
 
@@ -16,22 +15,14 @@ app.use(helmet());
 
 app.use(express.json());
 
-app.get("/health", (req: Request, res: Response, next: NextFunction) => {
-  res.status(200).json({ message: "success" });
+app.get('/health', (req: Request, res: Response) => {
+  res.status(200).json({ message: 'success' });
 });
 
-app.use("/api/v1/book", bookController);
+app.use('/api/v1/book', bookController);
 
-app.use((req: Request, res: Response, next: NextFunction) => {
-  res.status(404).json({ message: "Not found" });
-});
+app.use(notFoundHandler);
 
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  console.log(err);
-  if (res.headersSent) {
-    return next(err);
-  }
-  return res.status(500).json({ message: `${err}` });
-});
+app.use(globalExceptionHandler);
 
 export default app;
